@@ -2,7 +2,7 @@
 Created on Fri Feb 11 15:14:18 2022
 
 @author: Godswill Agbofode
-Reference: To be added
+References: https://www.codegrepper.com/code-examples/python/convert+video+to+frames+python+opencv
 Edit to sync frames with those from dated data on pressure
     """
 #Imports
@@ -27,7 +27,7 @@ video_name = askopenfilename() # show an "Open" dialog box and return the path t
 #'Insert code to check that '
 #%%Parameters
 #Data column headers template: Frame Count, Frame ID, Time(in milliseconds), E1_Dh1_(x,y), E1_Dh2_(x,y), E1_Dv1_(x,y), E1_Dv2_(x,y), E2_Dh1_(x,y), E2_Dh2_(x,y), E2_Dh1_(x,y), E2_Dh2_(x,y), E3_Dh1_(x,y), E3_Dh2_(x,y), E3_Dh1_(x,y), E3_Dh2_(x,y)
-headers = 'Frame Count, Frame ID, Time(in milliseconds), E1_Dh1_(x,y), E1_Dh2_(x,y), E2_Dh1_(x,y), E2_Dh2_(x,y), E3_Dh1_(x,y), E3_Dh2_(x,y)'
+headers = 'Frame Count,Frame ID,Time(in milliseconds),E1_Dv1_(x,y),E1_Dv2_(x,y),E2_Dv1_(x,y),E2_Dv2_(x,y),E3_Dv1_(x,y),E3_Dv2_(x,y),D1,D2,D3'
 record_start = input("Enter start time in seconds of recorded measurements: ")
 record_start = int(record_start)
 print("Start time :" + str(record_start)) 
@@ -84,7 +84,8 @@ frameIDDivisor = math.floor(frameRate//myFrameRate)
 #print("The framerate is " + str(frameRate))
 #print("The cap is opened: " + str(cap.isOpened()))
 #%%
-sys.stdout = open(video_name + ".txt", "w")
+stdout = sys.stdout
+sys.stdout = open(video_name + ".csv", "w")
 print(headers, end = '')
 frameId =cap.get(1)
 #print(frameId)
@@ -131,6 +132,7 @@ while(True):
                 count+=1
 cap.release()
 sys.stdout.close()
+sys.stdout = stdout
 print ("Done!")
 
 #%%
